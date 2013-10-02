@@ -24,7 +24,6 @@ module Gnib
       @parameters = {}
 
       # Set default values for required parameters
-      @parameters[:app_id] = Gnib.config.application_id
       @parameters[:sources] = ['Web']
       @parameters[:query] = q
 

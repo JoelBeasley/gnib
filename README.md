@@ -27,7 +27,7 @@ Obtain your Application key from [here] (https://ssl.bing.com/webmaster/develope
 
 ### Standalone
 
-    Gnib.config.application_id = 'YOUR_APP_ID'
+    Gnib.config.account_key = 'YOUR_ACCT_ID'
     results = Gnib::Search.get('Great', :sources => [:image])
 
 ### Rails 3.x
@@ -35,7 +35,7 @@ Obtain your Application key from [here] (https://ssl.bing.com/webmaster/develope
 In initializers like `config/initializers/gnib.rb`, configure Gnib with
 your Application key.
 
-    Gnib.config.application_id = 'YOUR_APP_ID'
+    Gnib.config.account_key = 'YOUR_ACCT_ID'
 
 You can search items in your actions.
 

@@ -1,14 +1,15 @@
 module Gnib
   class Configurations
     private_class_method :new
-    attr_accessor :application_id, :api_root
+    attr_accessor :account_key, :api_root
 
     def self.singleton_object
       @singleton ||= new
     end
 
     def api_root
-      @api_root ||= 'http://api.bing.net/json.aspx'
+      #maybe NEWS or something based on how it interperts
+      @api_root ||= 'https://api.datamarket.azure.com/Bing/Search/v1'
     end
 
     private

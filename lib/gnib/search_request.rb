@@ -1,5 +1,6 @@
 require 'uri'
 require 'net/http'
+require 'base64'
 
 module Gnib
   class SearchRequest
@@ -13,9 +14,13 @@ module Gnib
     end
 
     protected
+      acctKey = Gnib.config.account_key
+      authKey = Base64.strict_encode64("#{acctKey}:#{acctKey}")
       def do_http_request
         http = Net::HTTP.new(@uri.host, @uri.port)
-        http.request(Net::HTTP::Get.new(@uri.request_uri))
+        request = Net::HTTP::Get.new(@uri.request_uri)
+        request.add_field "Authorization", "Basic #{authKey}"
+        http.request(request)
       end
   end
 end
