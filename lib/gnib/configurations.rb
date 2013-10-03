@@ -6,9 +6,6 @@ module Gnib
     def self.singleton_object
       @singleton ||= new
     end
-    def account_key
-      @account_key
-    end
     def api_root
       #maybe NEWS or something based on how it interperts
       @api_root ||= 'https://api.datamarket.azure.com/Bing/Search/v1'
