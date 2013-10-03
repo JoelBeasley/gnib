@@ -50,7 +50,7 @@ module Gnib
 
     protected
       def request_uri
-        URI.parse("#{Gnib.config.api_root}?#{serialized_parameters}")
+        URI.parse("#{Gnib.config.api_root}?#{serialized_parameters}&$format=json")
       end
 
       # Convert @parameters into HTTP GET parameters
