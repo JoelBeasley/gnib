@@ -1,6 +1,6 @@
 require 'uri'
 require 'net/http'
-require 'base64'
+require 'Base64'
 
 module Gnib
   class SearchRequest
