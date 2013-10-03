@@ -1,5 +1,5 @@
 require 'uri'
-require 'net/http'
+require 'net/https'
 require 'Base64'
 
 module Gnib
@@ -18,6 +18,7 @@ module Gnib
         acctKey = Gnib.config.account_key
         authKey = Base64.strict_encode64("#{acctKey}:#{acctKey}")
         http = Net::HTTP.new(@uri.host, @uri.port)
+        http.use_ssl = true
         request = Net::HTTP::Get.new(@uri.request_uri)
         request.add_field "Authorization", "Basic #{authKey}"
         http.request(request)
