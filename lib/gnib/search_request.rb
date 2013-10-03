@@ -14,9 +14,9 @@ module Gnib
     end
 
     protected
-      acctKey = "123"
-      authKey = Base64.strict_encode64("#{acctKey}:#{acctKey}")
       def do_http_request
+        acctKey = Gnib.config.account_key
+        authKey = Base64.strict_encode64("#{acctKey}:#{acctKey}")
         http = Net::HTTP.new(@uri.host, @uri.port)
         request = Net::HTTP::Get.new(@uri.request_uri)
         request.add_field "Authorization", "Basic #{authKey}"
