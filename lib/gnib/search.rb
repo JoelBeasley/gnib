@@ -7,7 +7,7 @@ module Gnib
   class Search
     extend SearchHelper
 
-    PARAMS = [:query, :sources, :market, :version, :adult, :options, :latitude, :longitude]
+    PARAMS = [:query, :$format, :sources, :market, :version, :adult, :options, :latitude, :longitude]
 
     SPECIFIC_PARAMS = {
       :image => [:count, :offset, :filters],
@@ -24,8 +24,11 @@ module Gnib
       @parameters = {}
 
       # Set default values for required parameters
-      @parameters[:sources] = ['Web']
+      
+      @parameters[:sources] = ['']
+      # @parameters[:sources] = ['json']
       @parameters[:query] = q
+
 
       # Iterate params array except query
       (PARAMS - [:query]).each do |param|
@@ -61,7 +64,7 @@ module Gnib
             expanded_hash_parameters(k, v)
           else
             # General required and optional parameters
-            "#{k.to_s.camelize}=#{CGI::escape(serialized_parameter(v))}"
+            "#{k.to_s.camelize}='#{CGI::escape(serialized_parameter(v))}'"
           end
         end.join('&')
       end
@@ -72,7 +75,7 @@ module Gnib
         base_str = "#{source.to_s.camelize}"
 
         params_hash.map do |k, v|
-          "#{base_str}.#{k.to_s.camelize}=#{serialized_parameter(v)}"
+          "#{base_str}.#{k.to_s.camelize}=#{CGI::escape(serialized_parameter(v))}"
         end.join('&')
       end
 
@@ -85,7 +88,7 @@ module Gnib
         when String
           v
         when Array
-          v.map(&:to_s).join(' ')
+          v.map(&:to_s).join('+')
         else
           v.to_s
         end

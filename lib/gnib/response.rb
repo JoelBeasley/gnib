@@ -2,14 +2,13 @@ module Gnib
   class Response
     SOURCES = [:web, :image, :news, :spell, :phonebook, :related_search, :translation, :video]
     def initialize(body)
-      @response_hash = ActiveSupport::JSON.decode(body)['SearchResponse']
+      @response_hash = JSON.parse(body)['d']['results']
     end
 
     def results_for(source)
-      results_container = @response_hash[source.to_s.camelize]
-
+      results_container = @response_hash[0][source.to_s.camelize]
       if results_container
-        @response_hash[source.to_s.camelize]['Results'].map do |result|
+        @response_hash[0][source.to_s.camelize].map do |result|
           SearchResult.new result
         end
       else
@@ -25,7 +24,7 @@ module Gnib
       ret = []
 
       SOURCES.each do |type, v|
-        ret |= results_for(type)
+        ret ||= results_for(type)
       end
 
       ret
