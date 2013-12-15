@@ -1,6 +1,5 @@
 require 'uri'
 require 'cgi'
-
 require 'gnib/search_helper'
 
 module Gnib
