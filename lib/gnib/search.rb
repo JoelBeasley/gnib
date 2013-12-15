@@ -7,7 +7,7 @@ module Gnib
   class Search
     extend SearchHelper
 
-    PARAMS = [:query, :$format, :sources, :market, :version, :adult, :options, :latitude, :longitude]
+    PARAMS = [:query, :$format, :$skip, :sources, :market, :version, :adult, :options, :latitude, :longitude, :NewsLocationOverride, :NewsCategory, :NewsSortBy]
 
     SPECIFIC_PARAMS = {
       :image => [:count, :offset, :filters],
@@ -23,9 +23,12 @@ module Gnib
     def initialize(q, options = {})
       @parameters = {}
 
+
+
       # Set default values for required parameters
       
       @parameters[:sources] = ['']
+      @parameters[:$skip] = 0
       # @parameters[:sources] = ['json']
       @parameters[:query] = q
 
@@ -62,6 +65,8 @@ module Gnib
           if v.is_a? Hash
             # Source-specific parameters
             expanded_hash_parameters(k, v)
+          elsif v.is_a? Fixnum
+            "#{k.to_s.camelize}=#{CGI::escape(serialized_parameter(v))}"
           else
             # General required and optional parameters
             "#{k.to_s.camelize}='#{CGI::escape(serialized_parameter(v))}'"
